@@ -1,0 +1,18 @@
+[
+  {
+    "name": "admin",
+    "username": "admin",
+    "password": "$2a$10$vUcCY5FcYeWkXmXxqf/0GesFvTk8xwiKqRjNKEHwOAQgRV2EVPaSS",
+    "role": "admin",
+    "lastname": "admin",
+    "age": 34
+  },
+  {
+    "name": "client",
+    "username": "client",
+    "password": "$2a$10$8k59tldw21zDrbhAAhdrPehvGVeVizxJ.4Jwg7/uFJ/k.uyz2SWhC",
+    "role": "client",
+    "lastname": "client",
+    "age": 24
+  }
+]

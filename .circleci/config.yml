@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+             - v1-pkg-cache
+
+      - run: yarn install
+      - run: yarn test
+workflows:
+  build-and-test:
+    jobs:
+      - build-and-test
