@@ -1,9 +1,9 @@
 const express = require("express");
 const logger = require("morgan");
 const compression = require("compression");
-// const appLogger = require("./pkg/logger");
+const appLogger = require("./pkg/logger");
 const cors = require("cors");
-// const { NOTACCEPTED } = require("./api/constants");
+const { NOTACCEPTED } = require("./api/constants/constants");
 
 /**
  * @description This initialize the application middlewares.
@@ -25,11 +25,11 @@ const initAppMiddlewares = (app) => {
  * @param  {NextFunction} next
  */
 module.exports.handleNotFound = (req, res, next) => {
-  //   appLogger.log(
-  //     "warn",
-  //     `method not implemented at ${req.originalUrl}, method: ${req.method}`
-  //   );
-  res.sendStatus(406);
+  appLogger.log(
+    "warn",
+    `method not implemented at ${req.originalUrl}, method: ${req.method}`
+  );
+  res.sendStatus(NOTACCEPTED);
   return next();
 };
 

@@ -3,7 +3,6 @@
 [![obasajujoshua31](https://circleci.com/gh/obasajujoshua31/simple-e-commerce-api.svg?style=svg)](https://app.circleci.com/pipelines/github/obasajujoshua31/simple-e-commerce-api)
 
 
-
 Steps to setup the project
 
 1. Download Docker from [here](https://www.docker.com/products/docker-desktop) if already don't have docker installed.
@@ -14,7 +13,6 @@ Steps to setup the project
 
 3. Create a file called .env in the root directory and copy the contents of .env.example into it and fill in your details.
  
-
 4. Run `docker-compose up` - to start the services. This include 
 
 - [Mongo Database](https://mongodb.com)
@@ -23,7 +21,6 @@ Steps to setup the project
 5. Start application at port 6000 and navigate to http://localhost:6000/api-docs for the API documentation
 
 `Note: If you are starting your application in a different port, go to swagger.json and change the host to the port you are using`
-
 
 
 6. Default client account - username `client` and password `client`
