@@ -3,20 +3,23 @@ const config = require("../config/config");
 const userSeed = require("./data/data");
 const User = require("../db/models/user");
 
-connectToDB(config);
+const dbClient = connectToDB(config);
 
-const createUser = () => {
-  User.estimatedDocumentCount({}, async (err, count) => {
-    if (!count && !err) {
-      const userSeeds = userSeed.map((user) => {
-        const newUser = new User(user);
+const createUser = async () => {
+  const userCount = await User.countDocuments({}).exec();
 
-        return newUser.save();
-      });
+  if (!userCount) {
+    const userSeeds = userSeed.map((user) => {
+      const newUser = new User(user);
 
-      await Promise.all(userSeeds);
-    }
-  });
+      return newUser.save();
+    });
+
+    await Promise.all(userSeeds);
+  }
 };
 
-createUser();
+(async () => {
+  await createUser();
+  dbClient.close();
+})();

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-
 /**
  * @description This will connect to mongo database instance with database url and database name
  * @param  {object} config - destructures database URl and database name to connect to
+ * @returns {mongoose.Connection}
  */
-const connectToDB = ({dBUrl, dbName}) => {
+const connectToDB = ({ dBUrl, dbName }) => {
   mongoose.connect(dBUrl, {
     useNewUrlParser: true,
     dbName,
@@ -21,6 +21,8 @@ const connectToDB = ({dBUrl, dbName}) => {
   db.once("open", () => {
     console.log("Database Connected!");
   });
+
+  return db;
 };
 
 module.exports = connectToDB;
