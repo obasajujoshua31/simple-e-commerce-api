@@ -10,7 +10,8 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "test": "NODE_ENV=test mocha test/index.spec.js --exit",
-    "seed:data": "node scripts/seed.js"
+    "seed:data": "node scripts/seed.js",
+    "pretest": "yarn seed:data"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,6 +23,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.11",
     "morgan": "^1.10.0",
+    "redis": "^3.0.2",
     "swagger-ui-express": "^4.1.4",
     "winston": "^3.3.3"
   },

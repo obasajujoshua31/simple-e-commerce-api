@@ -1,11 +1,17 @@
 const mongoose = require("mongoose");
 
-const connectToDB = (config) => {
-  mongoose.connect(config.dBUrl, {
+
+/**
+ * @description This will connect to mongo database instance with database url and database name
+ * @param  {object} config - destructures database URl and database name to connect to
+ */
+const connectToDB = ({dBUrl, dbName}) => {
+  mongoose.connect(dBUrl, {
     useNewUrlParser: true,
-    dbName: config.dbName,
+    dbName,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    autoIndex: false,
   });
 
   const db = mongoose.connection;

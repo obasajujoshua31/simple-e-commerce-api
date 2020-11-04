@@ -4,6 +4,9 @@ const {
   NOTFOUND,
   INTERNALSERVERERROR,
   CREATED,
+  NOCONTENT,
+  NOTAUTHORIZED,
+  FORBIDDEN,
 } = require("./constants/constants");
 
 /**
@@ -52,4 +55,28 @@ module.exports.serverError = (res) => {
     .send(
       "an error occurred, be rest assured that our team is looking into it"
     );
+};
+
+/**
+ * @description This returns no content response
+ * @param  {Response} res
+ */
+module.exports.sendNoContent = (res) => {
+  return res.sendStatus(NOCONTENT);
+};
+
+/**
+ * @description This returns not authorized response
+ * @param  {Response} res
+ */
+module.exports.sendNotAuthorized = (res) => {
+  return res.sendStatus(NOTAUTHORIZED);
+};
+
+/**
+ * @description This returns not authorized response
+ * @param  {Response} res
+ */
+module.exports.sendNotAllowed = (res) => {
+  return res.sendStatus(FORBIDDEN);
 };

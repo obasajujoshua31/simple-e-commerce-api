@@ -1,0 +1,470 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a simple E-Commerce-API",
+    "version": "1.0.0",
+    "title": "Simple E-Commerce API",
+    "contact": {
+      "email": "obasajujoshua31@gmail.com"
+    }
+  },
+  "host": "localhost:6000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "client/admins",
+      "description": "Operations available to both admin and clients"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "client/admins"
+        ],
+        "summary": "sign up user",
+        "operationId": "signupUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sign up user",
+            "description": "sign up user body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/signUpUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "sign up success"
+          },
+          "400": {
+            "description": "invalid input data"
+          }
+        }
+      }
+    },
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "client/admins"
+        ],
+        "summary": "sign in user",
+        "operationId": "signInUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "sign in credentials",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/signInUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sign in success"
+          }
+        }
+      }
+    },
+    "/auth/signout": {
+      "get": {
+        "tags": [
+          "client/admins"
+        ],
+        "summary": "sign out user",
+        "operationId": "signOutUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "signout success"
+          },
+          "401": {
+            "description": "not authorized"
+          }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": [
+          "client/admins"
+        ],
+        "summary": "get all products",
+        "description": "By passing in the appropriate limit and page, you can get products\navailable in the system\n",
+        "operationId": "getAllProducts",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "page number",
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "maximum number of records to return",
+            "required": false,
+            "type": "integer",
+            "maximum": 50,
+            "minimum": 0,
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get results success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProductItem"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "create product",
+        "description": "create new product",
+        "operationId": "createProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "productItem",
+            "description": "product Item to add",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProductPostItem"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "item created"
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "401": {
+            "description": "not authorized"
+          },
+          "404": {
+            "description": "not found for non admin users"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "client/admins"
+        ],
+        "summary": "get product details",
+        "description": "By passing in the appropriate limit and page, you can get products\navailable in the system\n",
+        "operationId": "getProductDetails",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of product",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "get product success",
+            "schema": {
+              "$ref": "#/definitions/ProductItem"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "update product",
+        "description": "updateProduct",
+        "operationId": "updateProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of product to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "productItem",
+            "description": "product Item to add",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/ProductPostItem"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "product updated",
+            "schema": {
+              "$ref": "#/definitions/ProductItem"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "401": {
+            "description": "not authorized"
+          },
+          "404": {
+            "description": "not found for non admin users"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "delete product",
+        "description": "delete product",
+        "operationId": "deleteProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "user bearer token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of product to delete",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "product deleted"
+          },
+          "400": {
+            "description": "invalid input, object invalid"
+          },
+          "401": {
+            "description": "not authorized"
+          },
+          "404": {
+            "description": "not found for non admin users"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProductItem": {
+      "type": "object",
+      "required": [
+        "_id",
+        "created_by",
+        "description",
+        "name",
+        "price"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "created_by": {
+          "$ref": "#/definitions/CreatedBy"
+        },
+        "description": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    },
+    "ProductPostItem": {
+      "type": "object",
+      "required": [
+        "description",
+        "name",
+        "price"
+      ],
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "price": {
+          "type": "number"
+        }
+      }
+    },
+    "CreatedBy": {
+      "required": [
+        "_id",
+        "age",
+        "lastname",
+        "name",
+        "role",
+        "username"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "age": {
+          "type": "number"
+        },
+        "username": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "example": "client or admin"
+        }
+      }
+    },
+    "signUpUser": {
+      "required": [
+        "age",
+        "lastname",
+        "name",
+        "password",
+        "username"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "age": {
+          "type": "number"
+        },
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "signInUser": {
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

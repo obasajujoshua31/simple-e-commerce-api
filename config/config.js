@@ -9,11 +9,9 @@ const {
   NODE_ENV,
   JWT_SECRET_KEY,
   REDIS_URL,
-  REDIS_USER,
-  REDIS_PASSWORD,
-  REDIS_DATABASE,
 } = process.env;
 
+// Application configuration
 module.exports = {
   redisUrl: REDIS_URL,
   appPort: APP_PORT,
@@ -21,9 +19,6 @@ module.exports = {
   dbUser: DB_USER,
   dbPassword: DB_PASSWORD,
   env: NODE_ENV,
-  redisPassword: REDIS_PASSWORD,
-  redisDb: REDIS_DATABASE,
-  redisUser: REDIS_USER,
   jwtSecret: JWT_SECRET_KEY,
   dBUrl: DATABASE_URL,
 };
