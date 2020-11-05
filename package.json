@@ -10,7 +10,9 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "seed:data": "node scripts/seed.js",
-    "test": "mocha test"
+    "test": "NODE_ENV=test mocha test/index.spec --exit",
+    "pretest": "yarn seed:data",
+    "posttest": "node scripts/drop.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -27,5 +29,8 @@
     "redis": "^3.0.2",
     "swagger-ui-express": "^4.1.4",
     "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "chai-http": "^4.3.0"
   }
 }

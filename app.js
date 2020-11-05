@@ -14,7 +14,7 @@ const port = config.appPort || 5500;
 // Initialize application middlewares
 initAppMiddlewares(app);
 
-connectToDB(config);
+const db = connectToDB(config);
 
 const redisClient = getRedisClient(config);
 app.use("/", routes(redisClient));
@@ -24,6 +24,12 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 // Application to handle other requests that handler cannot be found
 app.all("*", handleNotFound);
+
+// Close all existing connection before exit
+process.on("exit", () => {
+  redisClient.quit();
+  db.close();
+});
 
 app.listen(port, console.log(`<== SERVER started at ${port} ==>`));
 

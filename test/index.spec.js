@@ -1,7 +1,2 @@
-const { expect } = require("chai");
-
-describe("Setup test", () => {
-  it("should pass", () => {
-    expect(true).to.be.true;
-  });
-});
+require("./controllers/auth.spec");
+require("./controllers/product.spec");
