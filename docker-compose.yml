@@ -14,7 +14,7 @@ services:
       REDIS_URL: $REDIS_URL
 
     ports:
-      - $APP_PORT:$APP_PORT
+      - $APP_PORT:5500
     depends_on:
       - mongodb
   mongodb:

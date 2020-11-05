@@ -10,6 +10,6 @@ COPY . .
 
 RUN chmod 755 start.sh
 
-EXPOSE 6000
+EXPOSE 5500
 
 CMD  [ "/bin/sh", "start.sh" ]
