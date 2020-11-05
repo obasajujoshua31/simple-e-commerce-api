@@ -28,18 +28,18 @@ const restrictedFieldsMap = {
 module.exports.createProduct = tryHandler(async (req, res) => {
   const {
     body: { name, description, price },
-    token: { decoded },
+    user: { decodedToken },
   } = req;
 
   const product = await Product.create({
     name,
     description,
     price,
-    created_by: decoded._id,
+    created_by: decodedToken._id,
   });
 
   logger.info("created new product record ...");
-  return createdResponse(res, product._doc);
+  return createdResponse(res, { product: product._doc });
 });
 
 /**
@@ -70,7 +70,7 @@ module.exports.updateProduct = tryHandler(async (req, res) => {
 
   const updatedProduct = await product.updateProduct(req.body);
   logger.info("product updated successfully ...");
-  return successResponse(res, updatedProduct);
+  return successResponse(res, { product: updatedProduct });
 });
 
 /**
@@ -83,12 +83,12 @@ module.exports.updateProduct = tryHandler(async (req, res) => {
 module.exports.getProductDetails = tryHandler(async (req, res) => {
   const {
     params: { id },
-    token: { decoded },
+    user: { decodedToken },
   } = req;
 
   const product = await Product.findById(id)
     .populate("created_by", "-password")
-    .select(restrictedFieldsMap[decoded.role]);
+    .select(restrictedFieldsMap[decodedToken.role]);
 
   if (!product) {
     logger.warn("product not found ..");
@@ -96,7 +96,7 @@ module.exports.getProductDetails = tryHandler(async (req, res) => {
   }
 
   logger.info("product details found successfully ...");
-  return successResponse(res, product);
+  return successResponse(res, { product });
 });
 
 /**
@@ -108,11 +108,11 @@ module.exports.getProductDetails = tryHandler(async (req, res) => {
  */
 module.exports.getAllProducts = tryHandler(async (req, res) => {
   const {
-    token: { decoded },
+    user: { decodedToken },
   } = req;
   const { limit, offset } = requestPaginationQuery(req);
   let products = Product.find({})
-    .select(restrictedFieldsMap[decoded.role])
+    .select(restrictedFieldsMap[decodedToken.role])
     .skip(offset)
     .limit(limit)
     .exec();

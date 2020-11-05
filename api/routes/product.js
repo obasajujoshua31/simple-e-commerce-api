@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { ADMINROLE, ROLE } = require("../constants/constants");
 const {
   createProduct,
   deleteProduct,
@@ -6,7 +7,7 @@ const {
   getProductDetails,
   getAllProducts,
 } = require("../controllers/product");
-const { isAdmin } = require("../middlewares/auth");
+const { isAdmin, authRole } = require("../middlewares/auth");
 const { findProduct } = require("../middlewares/product");
 const {
   validateCreateProduct,
@@ -17,13 +18,13 @@ const router = Router();
 
 router
   .route("/")
-  .post(isAdmin, validateCreateProduct, createProduct)
+  .post(authRole(ROLE.ADMIN), validateCreateProduct, createProduct)
   .get(getAllProducts);
 
 router
   .route("/:id")
-  .delete(isAdmin, findProduct, deleteProduct)
-  .put(isAdmin, validateUpdateProduct, findProduct, updateProduct)
+  .delete(authRole(ROLE.ADMIN), findProduct, deleteProduct)
+  .put(authRole(ROLE.ADMIN), validateUpdateProduct, findProduct, updateProduct)
   .get(getProductDetails);
 
 module.exports = router;

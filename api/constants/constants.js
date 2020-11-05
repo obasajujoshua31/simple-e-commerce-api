@@ -6,6 +6,8 @@ module.exports.NOTFOUND = 404;
 module.exports.INTERNALSERVERERROR = 500;
 module.exports.NOCONTENT = 204;
 module.exports.NOTAUTHORIZED = 401;
-module.exports.ADMINROLE = "admin";
-module.exports.CLIENTROLE = "client";
+module.exports.ROLE = {
+  ADMIN: "admin",
+  CLIENT: "client",
+};
 module.exports.FORBIDDEN = 403;

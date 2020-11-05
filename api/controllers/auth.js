@@ -21,7 +21,6 @@ module.exports.signUpUser = tryHandler(async (req, res) => {
   const { username, lastname, name, password, age } = req.body;
 
   const foundUser = await User.findOne({ username });
-
   if (foundUser) {
     logger.log("warn", "username is not available");
     return res.status(409).send("username not available");
@@ -38,7 +37,10 @@ module.exports.signUpUser = tryHandler(async (req, res) => {
   const newUser = await user.save();
 
   logger.log("info", "creating account for user ...");
-  return createdResponse(res, generateToken(newUser._doc));
+  return createdResponse(res, {
+    token: generateToken(newUser._doc),
+    expiresIn: "24h",
+  });
 });
 
 /**
@@ -64,7 +66,10 @@ module.exports.loginUser = tryHandler(async (req, res) => {
   }
 
   logger.info("generating token for user ...");
-  return successResponse(res, generateToken(foundUser._doc));
+  return successResponse(res, {
+    token: generateToken(foundUser._doc),
+    expiresIn: "24h",
+  });
 });
 
 /**
@@ -75,12 +80,12 @@ module.exports.loginUser = tryHandler(async (req, res) => {
 module.exports.logOutUser = (client) =>
   tryHandler(async (req, res) => {
     const {
-      token: { raw, decoded },
+      user: { rawToken, decodedToken },
     } = req;
 
-    const expiry = decoded.exp - new Date().getTime() / 1000;
+    const expiry = decodedToken.exp - new Date().getTime() / 1000;
 
-    setToken(client, raw, Math.round(expiry));
+    setToken(client, rawToken, Math.round(expiry));
 
     logger.info("token blacklisted successfully...");
     return sendNoContent(res);
