@@ -86,6 +86,7 @@ module.exports.getProductDetails = tryHandler(async (req, res) => {
     user: { decodedToken },
   } = req;
 
+  // restrict non admin users from viewing created_by fields
   const product = await Product.findById(id)
     .populate("created_by", "-password")
     .select(restrictedFieldsMap[decodedToken.role]);
@@ -110,7 +111,11 @@ module.exports.getAllProducts = tryHandler(async (req, res) => {
   const {
     user: { decodedToken },
   } = req;
+
   const { limit, offset } = requestPaginationQuery(req);
+
+
+  // restrict non admin users from viewing created_by fields
   let products = Product.find({})
     .select(restrictedFieldsMap[decodedToken.role])
     .skip(offset)
