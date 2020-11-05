@@ -9,7 +9,7 @@ const getRedisClient = require("./redis/client");
 
 const app = express();
 
-const port = config.appPort || 6000;
+const port = config.appPort || 5500;
 
 // Initialize application middlewares
 initAppMiddlewares(app);

@@ -3,7 +3,7 @@ const redis = require("redis");
 /**
  * @description This will get the client connection to a redis instance
  * @param  {object} config
- * @returns {redis.RedisClient} 
+ * @returns {redis.RedisClient}
  */
 const getRedisClient = ({ redisUrl }) => {
   const client = redis.createClient({

@@ -24,7 +24,7 @@ module.exports.signUpUser = tryHandler(async (req, res) => {
 
   if (foundUser) {
     logger.log("warn", "username is not available");
-    return sendBadRequest(res, "username is not available");
+    return res.status(409).send("username not available");
   }
 
   const user = new User({

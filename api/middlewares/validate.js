@@ -1,21 +1,22 @@
-const { check, validationResult, ValidationChain } = require("express-validator");
+const {
+  check,
+  validationResult,
+  ValidationChain,
+} = require("express-validator");
 const { sendBadRequest } = require("../responses");
 const logger = require("../../pkg/logger");
-
-
 
 /**
  * @description - this will validate the the field is string and minimum length of number
  * @param  {string} field - the field to validate
- * @param  {Number} length - minimum expected length - default - 5
+ * @param  {Number} length - minimum expected length - default - 4
  * @returns {ValidationChain}
  */
-const stringFieldCheck = (field, length = 5) =>
+const stringFieldCheck = (field, length = 4) =>
   check(field)
     .trim()
     .isLength({ min: length })
     .withMessage(`${field} must be greater than ${length}`);
-
 
 /**
  * @description - this will validate the the field is number
@@ -25,7 +26,6 @@ const stringFieldCheck = (field, length = 5) =>
 const numberFieldCheck = (field) =>
   check(field).trim().isNumeric().withMessage(`${field} is not a valid number`);
 
-  
 /**
  * @param  {Request} req - request object
  * @param  {Response} res - response object
@@ -45,7 +45,6 @@ const validateAndSendResponse = (req, res, next) => {
 
   return next();
 };
-
 
 // Validation for signup, checks username, password, name, lastname and age and validate the request
 module.exports.validateSignup = [

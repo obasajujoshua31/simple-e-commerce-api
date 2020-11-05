@@ -1,7 +1,5 @@
 # simple-e-commerce-api
 
-[![obasajujoshua31](https://circleci.com/gh/obasajujoshua31/simple-e-commerce-api.svg?style=svg)](https://app.circleci.com/pipelines/github/obasajujoshua31/simple-e-commerce-api)
-
 
 Steps to setup the project
 
@@ -18,7 +16,7 @@ Steps to setup the project
 - [Mongo Database](https://mongodb.com)
 - [Express Api application](https://expressjs.com)
 
-5. Start application at port 6000 and navigate to http://localhost:6000/api-docs for the API documentation
+5. Start application at port 5500 and navigate to http://localhost:5500/api-docs for the API documentation
 
 `Note: If you are starting your application in a different port, go to swagger.json and change the host to the port you are using`
 
